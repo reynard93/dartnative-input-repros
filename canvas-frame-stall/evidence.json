@@ -1,0 +1,84 @@
+{
+  "status": "Investigation: original app stall observed; standalone diagnostic currently passes. No deterministic SDK-only failing trigger yet.",
+  "date": "2026-09-15",
+  "original_app": {
+    "android_api": 36,
+    "architecture": "arm64",
+    "viewport_logical": [
+      411.42,
+      914.28
+    ],
+    "assets_ready": true,
+    "surface_mounted": true,
+    "surface_bound": true,
+    "foreground": true,
+    "lifecycle_paused": false,
+    "failure": null,
+    "painter_failed": false,
+    "has_painted_before_probe": false,
+    "runtime_tick": 1217,
+    "runtime_phase": "terminal",
+    "runtime_error": null,
+    "native_frame_driver_reported_active": true,
+    "native_frame_driver_ticks_field": 0,
+    "shared_dart_frame_timer": null,
+    "app_paused": false,
+    "manual_probe": "Dart VM service invoke CanvasSurfaceNativeElement._tick (using its library-scoped VM selector); rendered world immediately",
+    "native_driver_restart": "Called _stopFrameDriver then _ensureFrameDriver; observed _driverTicks still 0 afterward. Does not establish the exact native failure mechanism.",
+    "post_manual_samples": [
+      {
+        "ticker_elapsed_us": {
+          "_duration": "1026640936"
+        },
+        "canvas_driver_ticks": "0",
+        "game_has_painted": "true",
+        "rust_tick": "1217",
+        "painter_failed": "false"
+      },
+      {
+        "ticker_elapsed_us": {
+          "_duration": "1028945226"
+        },
+        "canvas_driver_ticks": "0",
+        "game_has_painted": "true",
+        "rust_tick": "1217",
+        "painter_failed": "false"
+      }
+    ],
+    "installed_artifact_sdk_revision": "Not independently recovered; do not infer from current SDK directory."
+  },
+  "standalone": {
+    "framework_revision": "9689ca2d76bdd4ffb121eb09274b06edf143ab3f",
+    "closed_framework_edition": "4407d97d638d01f6",
+    "engine_revision": "bda36d8992c57394aa02b574c86d819433d3f175",
+    "dart_sdk_version": "3.12.0 (build 3.12.0-192.0.dev)",
+    "mode": "profile",
+    "android_api": 36,
+    "fingerprint": "google/sdk_gphone64_arm64/emu64a:16/BE2A.250530.026.D1/13818094:user/release-keys",
+    "emulator_gpu": "swiftshader_indirect",
+    "variants": [
+      {
+        "navigation": "push MaterialPageRoute",
+        "animating": "true from mount",
+        "result": "paint callbacks advanced; observed ticker=277 paints=174"
+      },
+      {
+        "navigation": "push MaterialPageRoute",
+        "animating": "false then true after 1 second",
+        "result": "paint callbacks advanced; observed ticker=116 paints=22"
+      },
+      {
+        "navigation": "pushReplacement PageRoute",
+        "animating": "false then true after 1 second",
+        "result": "paint callbacks advanced; observed ticker=402 paints=103; screenshot shows green canvas and white dot",
+        "published_source": true
+      }
+    ],
+    "performance_caveat": "Emulator suffered substantial scheduling/graphics delays during these runs. Low counts are not presented as an SDK performance benchmark."
+  },
+  "excluded_claims": [
+    "No verified link to user-reported newer-simulator button no-op.",
+    "No claim that a fresh CanvasSurface generally fails.",
+    "No verified exact native frame-driver root cause."
+  ]
+}
