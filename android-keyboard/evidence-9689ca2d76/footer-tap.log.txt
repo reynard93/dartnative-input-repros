@@ -1,0 +1,7 @@
+Target: dev.repro.keyboard_lift_repro on emulator-5566 (DNTextVerify20260915)
+Runner: sdk20-fresh-app
+Action: agent-device --session issue20-verify press @e1 --settle
+Button center: (540, 1444); keyboard state before tap: visible=true; IME=com.google.android.inputmethod.latin
+Observed native log:
+dartnative: FOOTER_TAPPED
+Runner log cursor: 21894

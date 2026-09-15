@@ -1,53 +1,65 @@
-# Android: bottomInputBar does not lift the complete bar above the keyboard
+# Android: bottomInputBar bottom edge still clips above Gboard
 
-Minimal SDK-only reproduction. No forms_kit, app services, custom insets, plugins, or keyboard listeners.
+SDK-only reproduction of the residual defect after DartNative #20. No forms_kit, app services, custom insets, application plugins, or keyboard listeners. `lib/main.dart` is unchanged from the original reproduction; Android platform sources are now included so the checkout runs directly.
 
 ## Run
 
-Install the DartNative SDK, make `dn` available, and boot an Android emulator with a software keyboard.
+Install the DartNative SDK, make `dn` available, and boot an Android emulator with Gboard:
 
 ```sh
 git clone https://github.com/reynard93/dartnative-input-repros.git
-cd dartnative-input-repros
-dn create --empty --platforms android --org dev.repro --project-name keyboard_lift_repro /tmp/keyboard_lift_repro
-cp android-keyboard/main.dart /tmp/keyboard_lift_repro/lib/main.dart
-cp android-keyboard/pubspec.yaml /tmp/keyboard_lift_repro/pubspec.yaml
-cd /tmp/keyboard_lift_repro
+cd dartnative-input-repros/android-keyboard
 dn pub get --no-example
-dn run -d <android-device-id>
+dn run --no-pub -d <android-device-id>
 ```
 
-`dn create`/`dn pub get` generate platform files and `lib/dartnative_plugin_registrant.dart`. No SDK binaries or generated bindings are distributed here.
+`dn pub get` generates the plugin registrant. `dn run` supplies local SDK paths and Gradle wrapper files. No SDK binaries, local SDK paths, signing keys or application secrets are distributed.
 
-1. Before focusing the field, observe the yellow input bar, Footer button, and BOTTOM OF INPUT BAR label.
-2. Tap the text field and open Gboard.
-3. Observe that the field is lifted only partially above the keyboard; the Footer button and bottom label are covered.
-4. Dismiss the keyboard using Android Back. The covered controls become visible again.
+1. Before focusing the field, observe the complete yellow input bar, Footer button, and BOTTOM OF INPUT BAR label.
+2. Tap the field to open real Gboard.
+3. Footer is now above the keyboard, but the label below it remains clipped.
+4. Tap Footer with the keyboard open; the app prints `FOOTER_TAPPED`.
+5. Enter three lines using Gboard, dismiss the keyboard, then reopen it. The field expands, but the same bottom-label clipping recurs. The full label returns after dismissal.
 
-Expected: the complete `Scaffold.bottomInputBar` stays above the keyboard, including its padding and controls below the focused field.
+Expected: the complete `Scaffold.bottomInputBar`, including bottom padding and labels below the focused field, remains above the keyboard.
 
-Actual: native lift protects the focused field rather than the complete registered input bar.
+## Latest verified environment
 
-## Verified environment
+- SDK framework `9689ca2d76bdd4ffb121eb09274b06edf143ab3f`, 3.45.0-0.1.pre.
+- Engine `bda36d8992`; Dart `3.12.0-192.0.dev`.
+- Fresh Pixel 7 Android 16/API 36 ARM64 emulator, Google Play image, 1080 x 2400, density 420 dpi.
+- Real Gboard (`com.google.android.inputmethod.latin`), not a test IME.
+- Original source clean-built with the updated SDK, then verified through native taps, multiline typing and repeated keyboard open/close. No physical-device retest claimed.
 
-- DartNative 3.45.0-0.1.pre, stable, framework 2186eee074 (2026-09-13).
-- Engine revision bda36d8992; Dart 3.12.0-192.0.dev.
-- Brand-new Pixel 7 AVD, Android 16/API 36, arm64-v8a, Google Play image.
-- Build fingerprint: google/sdk_gphone64_arm64/emu64a:16/BE2A.250530.026.D1/13818094:user/release-keys.
-- Display: 1080 x 2400 physical pixels, density 420 dpi.
-- Gboard 15.1.08.726012951-preload-arm64-v8a.
-- Reproduced after native debug build, then again after force-stop/cold launch using standard `adb shell input tap` with Gboard selected. No text-injection helper is needed.
+## Current evidence
 
-## Evidence
+[Sanitized geometry and interaction receipt](evidence-9689ca2d76/receipt.json).
 
-![Before opening keyboard](before.png)
+Keyboard open:
 
-![Keyboard covers footer controls](keyboard-open.png)
+![Bottom label clipped above Gboard](evidence-9689ca2d76/02-keyboard-open-bottom-crop.png)
 
-Both screenshots are from the minimal source in this directory. The open-keyboard screenshot shows the yellow bar cut at the keyboard edge, with its lower controls missing.
+Keyboard dismissed:
 
-## Application workaround
+![Complete bottom label after dismissal](evidence-9689ca2d76/04-keyboard-dismissed-bottom-crop.png)
 
-On Android, avoid `bottomInputBar` for the affected composer: disable native scaffold resizing and place the composer at the bottom of a finite body viewport whose height subtracts system padding, app-bar height, and `MediaQuery.viewInsets.bottom`. Keep native `bottomInputBar` on iOS. Padding around the native input slot did not fix the application case.
+[Multiline full-screen capture](evidence-9689ca2d76/03-multiline-keyboard.png) and [successful Footer callback](evidence-9689ca2d76/footer-tap.log.txt).
 
-The manual height calculation depends on the application's chrome and is not a universal SDK replacement. Remove it only after verifying an SDK fix with complete bar bounds, multiline input, and keyboard open/close transitions.
+Measured physical pixels:
+
+- Gboard starts at y=1517.
+- Footer bottom is y=1495: fully clear, 22 px gap.
+- Only 14 of the label's 26 glyph rows remain visible.
+- Single-line yellow bar: 460 px visible without keyboard, 397 with it.
+- Multiline yellow bar: 570 px visible without keyboard, 507 with it.
+- Both lose 63 px, matching the 63 px bottom system area below the bar before keyboard opening. An inset/coordinate-space mismatch is a hypothesis, not an inspected SDK source diagnosis.
+
+## Impact and workaround
+
+This is a non-crashing visibility defect. Footer clicks work in this reproduction; there is no evidence of data loss. It still obscures actual bar content and can affect helper/error text placed below the editor.
+
+The application currently avoids the affected Android slot: native scaffold resizing is disabled and the composer sits in a finite body viewport subtracting system padding, app-bar height and IME insets. Native `bottomInputBar` remains on iOS. Keep that workaround until complete bar bounds and keyboard transitions pass. Its application-specific geometry is not a universal SDK fix.
+
+## Historical pre-fix evidence
+
+The original `2186eee074` reproduction also hid the Footer button. [Original source and receipt](https://github.com/reynard93/dartnative-input-repros/tree/ad817e7f6250045813e911f4f167a0db88dc1bd8/android-keyboard) remain available. The old `before.png` and `keyboard-open.png` in this directory belong to that earlier capture, not the current SDK.

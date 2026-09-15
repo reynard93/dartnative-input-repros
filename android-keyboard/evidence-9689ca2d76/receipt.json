@@ -1,0 +1,205 @@
+{
+  "date": "2026-09-15",
+  "sdk": {
+    "frameworkRevision": "9689ca2d76bdd4ffb121eb09274b06edf143ab3f",
+    "version": "3.45.0-0.1.pre",
+    "engine": "bda36d8992",
+    "dart": "3.12.0-192.0.dev"
+  },
+  "device": {
+    "type": "Pixel 7 Android API 36 ARM64 emulator",
+    "screen": {
+      "width": 1080,
+      "height": 2400,
+      "densityDpi": 420
+    },
+    "ime": "Gboard",
+    "testIme": false
+  },
+  "result": "FAIL",
+  "states": {
+    "beforeKeyboard": {
+      "screenshot": "01-before-keyboard.png",
+      "physicalScreenshot": {
+        "width": 1080,
+        "height": 2400
+      },
+      "yellowBar": {
+        "x": 0,
+        "y": 1877,
+        "width": 1080,
+        "height": 460,
+        "bottomExclusive": 2337
+      },
+      "inputAX": {
+        "x": 73,
+        "y": 1950,
+        "width": 933,
+        "height": 135,
+        "bottomExclusive": 2085
+      },
+      "footerAX": {
+        "x": 390,
+        "y": 2149,
+        "width": 299,
+        "height": 103,
+        "bottomExclusive": 2252
+      },
+      "label": "BOTTOM OF INPUT BAR",
+      "assessment": "PASS: full bar and footer label visible before keyboard"
+    },
+    "keyboardOpenSingleLine": {
+      "screenshot": "02-keyboard-open.png",
+      "keyboardTopY": 1517,
+      "yellowBar": {
+        "x": 0,
+        "y": 1120,
+        "width": 1080,
+        "height": 397,
+        "bottomExclusive": 1517
+      },
+      "inputAX": {
+        "x": 73,
+        "y": 1193,
+        "width": 933,
+        "height": 135,
+        "bottomExclusive": 1328
+      },
+      "footerAX": {
+        "x": 390,
+        "y": 1392,
+        "width": 299,
+        "height": 103,
+        "bottomExclusive": 1495,
+        "gapToKeyboard": 22
+      },
+      "labelVisiblePixels": {
+        "x": 344,
+        "y": 1503,
+        "width": 390,
+        "height": 14,
+        "bottomExclusive": 1517
+      },
+      "labelFullReferencePixels": {
+        "y": 2260,
+        "height": 26
+      },
+      "assessment": "FAIL: Footer button fully above Gboard; BOTTOM OF INPUT BAR is clipped at keyboard top (only 14 of 26 glyph rows visible)"
+    },
+    "keyboardOpenMultiline": {
+      "screenshot": "03-multiline-keyboard.png",
+      "keyboardTopY": 1517,
+      "yellowBar": {
+        "x": 0,
+        "y": 1010,
+        "width": 1080,
+        "height": 507,
+        "bottomExclusive": 1517
+      },
+      "inputAX": {
+        "x": 73,
+        "y": 1083,
+        "width": 933,
+        "height": 245,
+        "bottomExclusive": 1328
+      },
+      "footerAX": {
+        "x": 390,
+        "y": 1392,
+        "width": 299,
+        "height": 103,
+        "bottomExclusive": 1495,
+        "gapToKeyboard": 22
+      },
+      "labelVisiblePixels": {
+        "x": 344,
+        "y": 1503,
+        "width": 390,
+        "height": 14,
+        "bottomExclusive": 1517
+      },
+      "enteredValueConfirmedAfterDismiss": "Line one\\nLine two\\nLine three",
+      "assessment": "FAIL: multiline field expands upward and remains visible; footer remains visible; bottom label remains clipped by Gboard"
+    },
+    "keyboardDismissedMultiline": {
+      "screenshot": "04-keyboard-dismissed.png",
+      "yellowBar": {
+        "x": 0,
+        "y": 1767,
+        "width": 1080,
+        "height": 570,
+        "bottomExclusive": 2337
+      },
+      "inputAX": {
+        "x": 73,
+        "y": 1840,
+        "width": 933,
+        "height": 245,
+        "bottomExclusive": 2085
+      },
+      "footerAX": {
+        "x": 390,
+        "y": 2149,
+        "width": 299,
+        "height": 103,
+        "bottomExclusive": 2252
+      },
+      "labelVisiblePixels": {
+        "x": 344,
+        "y": 2260,
+        "width": 391,
+        "height": 26,
+        "bottomExclusive": 2286
+      },
+      "assessment": "PASS: full multiline bar, footer, and bottom label visible after keyboard dismissal"
+    },
+    "reopenCloseRepeat": {
+      "reopenScreenshot": "05-reopen-multiline-keyboard.png",
+      "reopenYellowBar": {
+        "y": 1010,
+        "bottomExclusive": 1517
+      },
+      "reopenFooterAX": {
+        "x": 390,
+        "y": 1392,
+        "width": 299,
+        "height": 103,
+        "bottomExclusive": 1495
+      },
+      "recloseScreenshot": "06-reclose-multiline.png",
+      "recloseYellowBar": {
+        "y": 1767,
+        "bottomExclusive": 2337
+      },
+      "recloseFooterAX": {
+        "x": 390,
+        "y": 2149,
+        "width": 299,
+        "height": 103,
+        "bottomExclusive": 2252
+      },
+      "assessment": "PASS: repeated open/close returned stable bounds; FAIL: same label clipping recurred on reopen"
+    }
+  },
+  "footerTap": {
+    "keyboardWasOpen": true,
+    "buttonBoundsAtTap": {
+      "x": 390,
+      "y": 1392,
+      "width": 299,
+      "height": 103
+    },
+    "logEvidence": "dartnative: FOOTER_TAPPED",
+    "assessment": "PASS: native Footer button action fired while Gboard was open"
+  },
+  "insetObservation": {
+    "singleLineHeightLoss": 63,
+    "multilineHeightLoss": 63,
+    "preKeyboardBottomSystemArea": 63,
+    "note": "Equal values suggest an inset/coordinate-space mismatch; SDK source cause not established."
+  },
+  "limits": [
+    "Fresh emulator, not physical hardware.",
+    "No app accounts, credentials, SDK binaries, raw heap or local SDK paths included."
+  ]
+}
