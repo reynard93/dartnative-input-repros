@@ -1,0 +1,289 @@
+{
+  "captureDate": "2026-09-15",
+  "description": "Dart VM getCpuSamples summaries. Counts are inclusive sampled stacks, not FPS or exact invocation counts. No raw heap, VM access URLs, local paths or account data included.",
+  "environment": {
+    "device": "PGU110 (physical Android)",
+    "mode": "profile",
+    "cliReportedVersion": "3.45.0-0.1.pre",
+    "cliChannel": "stable",
+    "frameworkRevision": "2186eee0749386eb69a4773d3a8e4295d64a999f",
+    "engineRevision": "bda36d8992c57394aa02b574c86d819433d3f175",
+    "dartNativePackage": "1.0.0",
+    "dartVmVersion": "3.12.0-192.0.dev (dev) (Thu Aug 27 09:08:03 2026 +0200) on \"android_arm64\""
+  },
+  "profiles": [
+    {
+      "label": "text-rebuild-minimal-before",
+      "seconds": 4,
+      "samples": 65,
+      "asShader": 0,
+      "rebuild": 0,
+      "top": [
+        [
+          "_RawReceivePort._handleMessage",
+          60
+        ],
+        [
+          "_Timer._handleMessage",
+          58
+        ],
+        [
+          "_Timer._runTimers",
+          38
+        ],
+        [
+          "loadSymbols.<anonymous closure>",
+          36
+        ],
+        [
+          "loadSymbols.#ffiClosure48",
+          34
+        ],
+        [
+          "_Timer._queueFromTimeoutEvent",
+          15
+        ],
+        [
+          "_timerMillisecondClock._timerMillisecondClock",
+          11
+        ],
+        [
+          "_EventHandler._timerMillisecondClock",
+          9
+        ],
+        [
+          "_EventHandler._sendData",
+          3
+        ],
+        [
+          "_sendData._sendData",
+          3
+        ],
+        [
+          "_Timer._scheduleWakeup",
+          3
+        ],
+        [
+          "_Timer._notifyEventHandler",
+          3
+        ]
+      ],
+      "samplePeriodMicros": 1000,
+      "timeExtentMicros": 3979160
+    },
+    {
+      "label": "text-rebuild-minimal-after",
+      "seconds": 4,
+      "samples": 851,
+      "asShader": 0,
+      "rebuild": 567,
+      "top": [
+        [
+          "_RawReceivePort._handleMessage",
+          605
+        ],
+        [
+          "_Timer._handleMessage",
+          601
+        ],
+        [
+          "_Timer._runTimers",
+          587
+        ],
+        [
+          "_createTimer.<anonymous closure>",
+          571
+        ],
+        [
+          "DartNativeReconciler._performRebuild",
+          567
+        ],
+        [
+          "DartNativeReconciler.markElementDirty",
+          529
+        ],
+        [
+          "Element.rebuild",
+          529
+        ],
+        [
+          "DartNativeReconciler._scheduleRebuild",
+          516
+        ],
+        [
+          "Timer._createTimer",
+          515
+        ],
+        [
+          "_RootZone.createTimer",
+          515
+        ],
+        [
+          "Timer.Timer",
+          515
+        ],
+        [
+          "Timer.run",
+          515
+        ]
+      ],
+      "samplePeriodMicros": 1000,
+      "timeExtentMicros": 3999400
+    },
+    {
+      "label": "text-rebuild-minimal-still-idle",
+      "seconds": 4,
+      "samples": 1039,
+      "asShader": 0,
+      "rebuild": 881,
+      "top": [
+        [
+          "_RawReceivePort._handleMessage",
+          897
+        ],
+        [
+          "_Timer._handleMessage",
+          893
+        ],
+        [
+          "_Timer._runTimers",
+          890
+        ],
+        [
+          "_createTimer.<anonymous closure>",
+          883
+        ],
+        [
+          "DartNativeReconciler._performRebuild",
+          881
+        ],
+        [
+          "DartNativeReconciler.markElementDirty",
+          871
+        ],
+        [
+          "Element.rebuild",
+          871
+        ],
+        [
+          "Timer._createTimer",
+          866
+        ],
+        [
+          "_RootZone.createTimer",
+          866
+        ],
+        [
+          "Timer.Timer",
+          866
+        ],
+        [
+          "Timer.run",
+          866
+        ],
+        [
+          "DartNativeReconciler._scheduleRebuild",
+          866
+        ]
+      ],
+      "samplePeriodMicros": 1000,
+      "timeExtentMicros": 4005897
+    }
+  ],
+  "vmEvidence": {
+    "dirtyElementCount": 1,
+    "dirtyElementType": "TextNativeElement",
+    "dependencies": [
+      "DefaultTextStyle"
+    ],
+    "classes": [
+      {
+        "name": "TextNativeElement",
+        "superclass": "NativeElement",
+        "methods": [
+          "TextNativeElement",
+          "_text",
+          "viewType",
+          "buildProps",
+          "mount"
+        ]
+      },
+      {
+        "name": "NativeElement",
+        "superclass": "Element",
+        "methods": [
+          "NativeElement",
+          "_nearestNativeParentViewId",
+          "mount",
+          "update",
+          "propsEqual",
+          "fillClaimUnder"
+        ]
+      },
+      {
+        "name": "Element",
+        "superclass": "Object",
+        "methods": [
+          "Element",
+          "widget",
+          "parent",
+          "isInsetSensitive",
+          "viewId",
+          "reconciler",
+          "_clearSubscriptions",
+          "dependOnInheritedWidgetOfExactType",
+          "_clearDependencies",
+          "mount",
+          "update",
+          "rebuild",
+          "unmount",
+          "children",
+          "replaceChild",
+          "emitMutation",
+          "notifyDependencyChanged"
+        ]
+      }
+    ]
+  },
+  "representativeCallChainRootToLeaf": [
+    {
+      "symbol": "DartNativeReconciler._performRebuild",
+      "file": "package:dartnative/src/reconciler/reconciler.dart",
+      "line": 976
+    },
+    {
+      "symbol": "Element.rebuild",
+      "file": "package:dartnative/src/reconciler/element.dart",
+      "line": 182
+    },
+    {
+      "symbol": "DartNativeReconciler.markElementDirty",
+      "file": "package:dartnative/src/reconciler/reconciler.dart",
+      "line": 601
+    },
+    {
+      "symbol": "DartNativeReconciler._scheduleRebuild",
+      "file": "package:dartnative/src/reconciler/reconciler.dart",
+      "line": 922
+    },
+    {
+      "symbol": "Timer.run"
+    },
+    {
+      "symbol": "Timer.Timer"
+    },
+    {
+      "symbol": "_RootZone.createTimer"
+    },
+    {
+      "symbol": "Timer._createTimer"
+    }
+  ],
+  "checks": {
+    "nativeAnalyze": "No issues found",
+    "applicationStyleChanges": 1,
+    "applicationTimers": 0,
+    "applicationAnimations": 0,
+    "beforeAndAfterScreenshotsByteIdentical": true
+  }
+}
